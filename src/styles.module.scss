@@ -1,0 +1,586 @@
+.selectBoxMain {
+    position: relative;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    border: 1px solid #ccc;
+    width: 100%;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    direction: ltr;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    cursor: pointer;
+    min-height: 22px;
+    pointer-events: all;
+    border-radius: 2px;
+    flex-wrap: wrap;
+    flex: 1 1 0%;
+    padding: auto;
+  }
+  
+  .dropDown {
+    border: 1px solid #ccc;
+    display: flex;
+    width: 100%;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    background: #fff;
+    border-radius: 2px;
+    max-height: 0px;
+    overflow: auto;
+    z-index: 9;
+    margin-top: 3px;
+    transition: 0.1s ease;
+  }
+  
+  .noMatch {
+    padding: 10px;
+    text-align: center;
+    color: #0074d9;
+  }
+  
+  .itemComponent {
+    margin-top: 2px;
+    cursor: pointer;
+    border-bottom: 1px solid #fff;
+    padding-bottom: 8px;
+  }
+  
+  .itemComponent:hover {
+    background: rgba(0, 116, 217, 0.1);
+  }
+  
+  .labelView {
+    padding-right: 8px;
+    padding-left: 8px;
+    padding-bottom: 4px;
+    padding-top: 2px;
+    border-radius: 15px;
+    font-size: 12px;
+    margin-left: 8px;
+  }
+  
+  .selectInputCollaboration {
+    line-height: inherit;
+    border: none;
+    margin-left: 5px;
+    background: transparent;
+    margin-bottom: 7px;
+    font-size: smaller;
+    height: 20px;
+    outline: none;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 210px;
+  }
+  
+  .selectInput {
+    line-height: inherit;
+    border: none;
+    margin-left: 5px;
+    background: transparent;
+    margin-bottom: 7px;
+    font-size: smaller;
+    height: 20px;
+    outline: none;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 80px;
+  }
+  
+  .selectedSpan {
+    padding-right: 10px;
+    margin-right: 10px;
+    padding-left: 10px;
+    padding-bottom: 4px;
+    padding-top: 2px;
+    border-radius: 15px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    cursor: pointer;
+  }
+  
+  .addBtn {
+    margin-left: 10px;
+    cursor: pointer;
+    color: #0074d9;
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+  
+  .hide {
+    visibility: hidden;
+    max-height: 0px;
+  }
+  
+  .show {
+    visibility: visible;
+    max-height: 300px !important;
+  }
+  
+  .valueWrapper {
+    border: none;
+    width: 95%;
+  }
+  
+  .arrowWrapper {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  
+  .arrow {
+    border-right: 2px solid grey;
+    border-top: 2px solid grey;
+    width: 7px;
+    height: 7px;
+    transition: 0.1s ease;
+  }
+  
+  .arrowDown {
+    transform: rotate(130deg);
+  }
+  
+  .arrowUp {
+    transform: rotate(-45deg);
+  }
+  
+  .collaborate {
+    display: inline-flex !important;
+    align-items: center;
+    padding-right: 8px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+  }
+  
+  .collaborateImage {
+    margin-right: -18px;
+    position: relative;
+    width: 23px;
+    border-radius: 50%;
+  }
+  
+  .collaborateView {
+    padding-left: 24px !important;
+    background: #ddd;
+    padding-bottom: 4px;
+    padding-top: 2px;
+    font-size: 12px;
+    border-radius: 0 100em 100em 0;
+    padding-right: 10px;
+    cursor: pointer;
+  }
+  
+  .removeItem {
+    padding-left: 10px;
+  }
+  
+  .pr {
+    padding-right: 20px !important;
+  }
+  
+  .options:hover {
+    background: rgba(0, 116, 217, 0.1);
+  }
+  
+  .SvgIconRoot :hover {
+    transform: scale(1.2);
+    fill: rgb(52, 85, 139);
+  }
+  
+  .SvgIconRoot {
+    fill: rgb(192, 192, 192);
+    cursor: pointer;
+    position: relative;
+    font-size: 1.5rem;
+    text-align: left;
+    -webkit-tap-highlight-color: transparent;
+    height: 40px;
+    width: 40px;
+  }
+  
+  .ratingActive {
+    fill: rgb(52, 85, 139) !important;
+  }
+  
+  input[type="checkbox"] {
+    opacity: 0;
+    position: absolute;
+  }
+  
+  input[type="checkbox"] + .checkboxBorder {
+    content: "";
+    background: #fff;
+    border-radius: 5px;
+    display: inline-block;
+    vertical-align: middle;
+    padding: 2px;
+    margin-right: 10px;
+    width: 15px;
+    height: 15px;
+    text-align: center;
+    cursor: pointer;
+    border: 3px solid #ddd;
+  }
+  
+  input[type="checkbox"]:checked + .checkboxBorder {
+    display: inline-block;
+    width: 2px;
+    height: 8px;
+    border: solid rgb(52, 85, 139);
+    border-width: 0 4px 4px 0;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    border-radius: 0px;
+    margin: 0px 15px 5px 5px;
+    cursor: pointer;
+  }
+  
+  .MyDatePicker {
+    float: left;
+    position: relative;
+  }
+  
+  .MyDatePicker * {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  .stackDateInput {
+    float: left;
+    width: 150px;
+    height: 35px;
+    overflow: hidden;
+    border-radius: 20px;
+  }
+  
+  .stackDateInput input:focus {
+    outline: none;
+  }
+  
+  .stackDateInput input {
+    width: 130%;
+    border: none;
+    padding-right: 10px;
+    height: 35px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 18px;
+    cursor: pointer;
+  }
+  
+  .stackDateContainer {
+    float: left;
+    position: absolute;
+    left: 0;
+    top: 40px;
+    width: 300px;
+    min-height: 350px;
+    background: #fff;
+    box-shadow: 10px 10px 40px rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    overflow: hidden;
+    padding: 25px 30px;
+  }
+  
+  .stackDateHead {
+    float: left;
+    width: 100%;
+    height: 53px;
+  }
+  
+  .stackBody {
+    float: left;
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  /**
+   * Controls
+   */
+  
+  .stackButton {
+    float: left;
+    width: 45px;
+    height: 100%;
+    box-sizing: border-box;
+    position: relative;
+  }
+  
+  .stackInner:hover > span {
+    border-color: #555 !important;
+  }
+  
+  .stackInner:hover {
+    cursor: pointer;
+    background: #eee;
+  }
+  
+  .stackInner {
+    float: left;
+    height: 35px;
+    width: 35px;
+    background: #f4f4f4;
+    border-radius: 100%;
+    line-height: 35px;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -17px;
+    margin-top: -17px;
+  }
+  
+  .stackRightArrows:after,
+  .stackLeftArrows:after,
+  .stackRightArrow,
+  .stackRightArrows,
+  .stackLeftArrow,
+  .stackLeftArrows {
+    display: block;
+    float: left;
+    width: 6px;
+    height: 6px;
+    border-left: 2px solid #888;
+    border-bottom: 2px solid #888;
+    position: absolute;
+  }
+  
+  .stackRightArrow,
+  .stackRightArrows,
+  .stackLeftArrow,
+  .stackLeftArrows {
+    transform: rotate(45deg);
+    left: 50%;
+    top: 50%;
+    margin-left: -2px;
+    margin-top: -4px;
+  }
+  
+  .stackRightArrows,
+  .stackRightArrow {
+    transform: rotate(225deg);
+    margin-left: -4px;
+  }
+  
+  .stackRightArrows:after,
+  .stackLeftArrows:after {
+    content: "";
+  }
+  
+  .stackLeftArrows {
+    margin-left: -5px;
+  }
+  
+  .stackRightArrows {
+    margin-left: -2px;
+  }
+  
+  .stackRightArrows:after,
+  .stackLeftArrows:after {
+    left: 3px;
+    top: -5px;
+  }
+  
+  .stackMonthContainer {
+    float: left;
+    width: 120px;
+    height: 100%;
+  }
+  
+  .stackByYear {
+    float: left;
+    width: 100%;
+    height: 30px;
+    font-size: 27px;
+    color: #666;
+    font-weight: 200px;
+    text-align: center;
+  }
+  
+  .stackByMonth {
+    float: left;
+    width: 100%;
+    height: 15px;
+    font-size: 13px;
+    color: #666;
+    font-weight: 200px;
+    text-align: center;
+  }
+  
+  /**
+   *  Calendar
+   */
+  .cc-month,
+  .stackHead,
+  .stackName,
+  .stackCcBody,
+  .stackDay span,
+  .stackDay,
+  .stackContainer,
+  .stackDayContainer {
+    position: relative;
+    display: block;
+    float: left;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+  
+  .stackDayContainer {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .cc-month {
+    height: 30px;
+    width: 100%;
+    font-family: Roboto;
+    font-size: 16px;
+    line-height: 30px;
+    color: #666;
+  }
+  
+  .stackHead {
+    height: 30px;
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  .stackName {
+    width: 14.285%;
+    height: 30px;
+    line-height: 30px;
+    font-weight: 700;
+    color: #666;
+    font-size: 9px;
+    text-align: center;
+  }
+  
+  .stackCcBody {
+    height: 270px;
+    width: 100%;
+  }
+  
+  .stackContainer {
+    width: 14.285%;
+    height: 16.6666%;
+  }
+  
+  .stackDay {
+    width: 100%;
+    height: 100%;
+    font-size: 12px;
+    font-weight: 300;
+    color: #444;
+    text-align: center;
+  }
+  
+  .stackDay span {
+    width: 100%;
+    height: 100%;
+    font-size: 12px;
+    font-weight: 300;
+    color: #444;
+  }
+  
+  .stackDay span:hover {
+    cursor: pointer;
+    background: #eee;
+  }
+  
+  .stackDay span {
+    width: 30px;
+    height: 30px;
+    margin-top: -15px;
+    margin-left: -15px;
+    left: 50%;
+    top: 50%;
+    font-weight: 400;
+    border-radius: 100%;
+    line-height: 30px;
+  }
+  
+  .stackContainer.disabled {
+    pointer-events: none;
+  }
+  
+  .stackContainer.disabled .stackDay span {
+    color: #ddd;
+  }
+  
+  .stackContainer.disabled .stackDay span {
+    background: #fff !important;
+  }
+  
+  .stackContainer.currentDate .stackDay span {
+    background: #efdbca;
+  }
+  
+  .stackContainer.selectedDate .stackDay span {
+    background: #d4e2cb;
+  }
+  
+  .textareaContainer {
+    position: relative;
+    /* background: #ddd; */
+  }
+  
+  .textAreaButton {
+    z-index: 100000000000;
+  }
+  
+  .textAreaIcon {
+    position: absolute;
+    top: 4px;
+    right: 8px;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+    background: white;
+    margin: 6px;
+  }
+  
+  .bubble {
+    font-size: 16px;
+    width: -webkit-fill-available;
+    height: -webkit-fill-available;
+    resize: none;
+    outline: none;
+    border: none;
+    border-radius: 8px;
+    background: white !important;
+  }
+  
+  .bubble:hover {
+    border: 2px solid rgb(26, 115, 232);
+  }
+  
+  .bubbleInput {
+    border: 3px solid #79696929;
+  }
+  
+  .addBtn {
+    margin-left: 10px;
+    cursor: pointer;
+    color: #0074d9;
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+  
