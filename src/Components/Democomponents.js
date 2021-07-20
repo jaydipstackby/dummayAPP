@@ -22,7 +22,6 @@ export const Select = ({ inputReference, value, option, onChange: setSelectedPop
   const ref = useRef(null)
 
   const handleChangeAdd = () => {
-    console.log("handle change Add called");
     const modifyData = { id: propsOptionsState.length + 1, label: inputValue, value: inputValue, color: ColorSelection[propsOptionsState.length].color, newCreate: true }
     setPropsOptionsState([...propsOptionsState, modifyData])
     setInputValue('')
@@ -56,8 +55,8 @@ export const Select = ({ inputReference, value, option, onChange: setSelectedPop
       return setOptions(result.filter((x) => x.value.toUpperCase().includes(payload.toUpperCase())))
     }
     const isValue = options.filter((x) => x.value === payload)
-    console.log("isvalue",isValue);
-    console.log("options",options);
+    console.log("isvalue", isValue);
+    console.log("options", options);
     if (payload) {
       setOptions(options.filter((x) => x.value.includes(payload)))
     } else {
@@ -70,11 +69,11 @@ export const Select = ({ inputReference, value, option, onChange: setSelectedPop
     } else {
       setValueIsExist(true)
     }
-  
+
   }
 
   const handleChangeSelectOption = (payload) => {
-    if (payload.id === EMPTYVALUE) {
+    if (payload && payload.id === EMPTYVALUE) {
       setOptions(propsOptionsState)
       setSelectedValue([])
     } else {
@@ -99,15 +98,15 @@ export const Select = ({ inputReference, value, option, onChange: setSelectedPop
   }
 
   const headerClickCheck = e => {
-    console.log("headerClickCheck called",e);
+    console.log("headerClickCheck called", e);
     if (inputRef.current !== null && !inputRef.current.contains(e.target)) {
       setOpen(!open)
       setInputValue('')
-    } 
-    if (e.keyCode === 8){
-      console.log("selectedValue",selectedValue);
+    }
+    if (e.keyCode === 8) {
+      console.log("selectedValue", selectedValue);
       selectedValue.pop();
-      }
+    }
   }
 
 
@@ -161,14 +160,12 @@ export const Select = ({ inputReference, value, option, onChange: setSelectedPop
   }
 
   const handleFocus = (e) => {
-    console.log("focus tab button called",e);
+    console.log("focus tab button called", e);
     setOpen(true)
   }
 
 
   const handleKeyPress = (e) => {
-    console.log("key press",e);
-    
     let countCheck = count;
 
     if (e.keyCode === 38 && countCheck > 1) {
@@ -183,19 +180,18 @@ export const Select = ({ inputReference, value, option, onChange: setSelectedPop
     }
 
     if (e.keyCode === 13) {
-      const result = countCheck == option.length ? option[count - 1] : option[count - 1]
-      setInputValue('');
-      handleChangeSelectOption(result)
-      setInputValue(e.target.value)
-      setOpen(false)
+      if (inputValue) {
+        handleChangeAdd()
+        setOpen(false)
+      }
     }
 
-    if (e.keyCode === 8){
-    console.log("selectedValue",selectedValue);
-    selectedValue.pop();
-    }
+    // if (e.keyCode === 8) {
+    //   selectedValue.pop();
+    // }
   }
 
+  console.log("inputValueinputValue", inputValue);
 
   return (
     <div ref={inputReference}>
@@ -204,13 +200,13 @@ export const Select = ({ inputReference, value, option, onChange: setSelectedPop
           <div className={selectStyles.valueWrapper + ' ' + selectStyles.selectBoxMain} onClick={() => setOpen(true)}>
             {
               type === select && !isEmpty(selectedValue) && (
-                <span className={selectStyles.selectedSpan} style={{ marginLeft : "10px" , color: (colorIsLight(colorDisable ? (disableColorCode ? disableColorCode : "#9e9e9e") : selectedValue[0].color) ? "#ffffff" : "#000000"), background: colorDisable ? (disableColorCode ? disableColorCode : "#9e9e9e") : selectedValue[0].color }} >{selectedValue[0].label}</span>
+                <span className={selectStyles.selectedSpan} style={{ marginLeft: "10px", color: (colorIsLight(colorDisable ? (disableColorCode ? disableColorCode : "#9e9e9e") : selectedValue[0].color) ? "#ffffff" : "#000000"), background: colorDisable ? (disableColorCode ? disableColorCode : "#9e9e9e") : selectedValue[0].color }} >{selectedValue[0].label}</span>
               )
             }
             {
               type === multiSelect && !isEmpty(selectedValue) && (
                 selectedValue.map((x, i) => {
-                  return <span key={i} className={selectStyles.selectedSpan} style={{ marginLeft : "10px" ,color: (colorIsLight(colorDisable ? (disableColorCode ? disableColorCode : "#9e9e9e") : x.color) ? "#ffffff" : "#000000"), background: colorDisable ? (disableColorCode ? disableColorCode : "#9e9e9e") : x.color }}>{x.label} <span onClick={() => removedItem(x.id)}>×</span></span>
+                  return <span key={i} className={selectStyles.selectedSpan} style={{ marginLeft: "10px", color: (colorIsLight(colorDisable ? (disableColorCode ? disableColorCode : "#9e9e9e") : x.color) ? "#ffffff" : "#000000"), background: colorDisable ? (disableColorCode ? disableColorCode : "#9e9e9e") : x.color }}>{x.label} <span onClick={() => removedItem(x.id)}>×</span></span>
                 })
               )
             }
