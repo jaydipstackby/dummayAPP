@@ -26,7 +26,7 @@ const [state, setstate] = useState([])
 
   return (
     <div style={{margin: "50px"}}>
-      <Select
+      {/* <Select
         value={state}
         onChange={handleChange}
         option={options}
@@ -35,9 +35,9 @@ const [state, setstate] = useState([])
         isOpenOption={false}
         colorDisable={false}
          disableColorCode="white"
-      />   
+      />    */}
 
- {/* <Select
+ <Select
           value={state}
           onChange={handleChange}
           option={options}
@@ -46,7 +46,7 @@ const [state, setstate] = useState([])
           isOpenOption={false}
           colorDisable={false}
           disableColorCode="white"
-         /> */}
+         />
 
     </div>
   )

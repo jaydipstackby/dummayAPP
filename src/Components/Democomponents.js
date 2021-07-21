@@ -73,6 +73,7 @@ export const Select = ({ inputReference, value, option, onChange: setSelectedPop
   }
 
   const handleChangeSelectOption = (payload) => {
+    console.log("handleChangeSelectOption");
     if (payload && payload.id === EMPTYVALUE) {
       setOptions(propsOptionsState)
       setSelectedValue([])
@@ -103,10 +104,7 @@ export const Select = ({ inputReference, value, option, onChange: setSelectedPop
       setOpen(!open)
       setInputValue('')
     }
-    if (e.keyCode === 8) {
-      console.log("selectedValue", selectedValue);
-      selectedValue.pop();
-    }
+
   }
 
 
@@ -170,13 +168,13 @@ export const Select = ({ inputReference, value, option, onChange: setSelectedPop
 
     if (e.keyCode === 38 && countCheck > 1) {
       countCheck = countCheck - 1;
-    } else if (e.keyCode === 40 && countCheck < option.length) {
+    } else if (e.keyCode === 40 && countCheck < options.length) {
       countCheck = countCheck + 1
     }
-
+    
     if (countCheck > 0) {
       setCount(countCheck)
-      setInputValue(option[countCheck - 1].value)
+      setInputValue(options[countCheck - 1].value)
     }
 
     if (e.keyCode === 13) {
@@ -186,9 +184,9 @@ export const Select = ({ inputReference, value, option, onChange: setSelectedPop
       }
     }
 
-    // if (e.keyCode === 8) {
-    //   selectedValue.pop();
-    // }
+    if (e.keyCode === 8) {
+      selectedValue.pop();
+    }
   }
 
   console.log("inputValueinputValue", inputValue);
