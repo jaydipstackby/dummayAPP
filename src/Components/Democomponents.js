@@ -19,9 +19,16 @@ export const Select = ({ inputReference, value, option, onChange: setSelectedPop
   const [open, setOpen] = useState(isOpenOption ? isOpenOption : false)
   const [isOpenModel, setIsOpenModel] = useState(false)
   const inputRef = useRef()
-  const ref = useRef(null)
+  const inputEl = useRef([]);
+
+  useEffect(() => {
+    if (!open) {
+      setCount(0);
+    }
+  }, [open])
 
   const handleChangeAdd = () => {
+
     const modifyData = { id: propsOptionsState.length + 1, label: inputValue, value: inputValue, color: ColorSelection[propsOptionsState.length].color, newCreate: true }
     setPropsOptionsState([...propsOptionsState, modifyData])
     setInputValue('')
@@ -34,7 +41,9 @@ export const Select = ({ inputReference, value, option, onChange: setSelectedPop
       setSelectedValue([...selectedValue, modifyData])
       setSelectedPops([...selectedValue, modifyData])
       const removeSameOption = selectedValue.map((io) => io.id);
+      console.log("removeSameOption", removeSameOption);
       var result = propsOptionsState.filter(e => removeSameOption.indexOf(e.id) === -1)
+      console.log("result", result);
       setOptions(result)
     }
   }
@@ -48,6 +57,7 @@ export const Select = ({ inputReference, value, option, onChange: setSelectedPop
   }, [])
 
   const handleChangeInput = (payload) => {
+
     setInputValue(payload)
     if (type === multiCollaborator || type === collaborator) {
       const removeSameOption = selectedValue.map((io) => io.id);
@@ -55,7 +65,6 @@ export const Select = ({ inputReference, value, option, onChange: setSelectedPop
       return setOptions(result.filter((x) => x.value.toUpperCase().includes(payload.toUpperCase())))
     }
     const isValue = options.filter((x) => x.value === payload)
-    console.log("isvalue", isValue);
     console.log("options", options);
     if (payload) {
       setOptions(options.filter((x) => x.value.includes(payload)))
@@ -137,9 +146,7 @@ export const Select = ({ inputReference, value, option, onChange: setSelectedPop
     setOptions(result)
     setIsOpenModel(true)
     setOpen(false)
-    setInputValue('')
   }
-
 
   const setCloseModel = () => {
     setIsOpenModel(false);
@@ -161,31 +168,55 @@ export const Select = ({ inputReference, value, option, onChange: setSelectedPop
     console.log("focus tab button called", e);
     setOpen(true)
   }
-
+  const manageHower = (e) => {
+    inputEl.current.forEach((element, x) => {
+      if (e === x) {
+        element.style.background = "blue";
+      } else {
+        element.style.background = "white";
+      }
+    });
+  }
+  const handleInputValue = (e) => {
+    if (e !== 0) {
+      setInputValue(options[e].value)
+    } else {
+      return
+    }
+  }
 
   const handleKeyPress = (e) => {
     let countCheck = count;
 
     if (e.keyCode === 38 && countCheck > 1) {
       countCheck = countCheck - 1;
+      setCount(countCheck);
+      handleInputValue(countCheck - 1)
+      manageHower(countCheck - 1)
     } else if (e.keyCode === 40 && countCheck < options.length) {
       countCheck = countCheck + 1
-    }
-    
-    if (countCheck > 0) {
       setCount(countCheck)
-      setInputValue(options[countCheck - 1].value)
+      handleInputValue(countCheck - 1)
+      manageHower(countCheck - 1)
     }
+
 
     if (e.keyCode === 13) {
       if (inputValue) {
-        handleChangeAdd()
-        setOpen(false)
+        console.log(countCheck);
+        if (countCheck <= 1) {
+          removedAllItem()
+        } else {
+          handleChangeAdd();
+        }
+        setOpen(false);
       }
+      setInputValue("");
     }
 
     if (e.keyCode === 8) {
       selectedValue.pop();
+      handleChangeInput();
     }
   }
 
@@ -213,7 +244,7 @@ export const Select = ({ inputReference, value, option, onChange: setSelectedPop
 
             {
               (type === select || type === multiSelect) &&
-              <input className={selectStyles.selectInput} placeholder={inputPlaceholder} onKeyDown={(e) => handleKeyPress(e)} onFocus={(e) => handleFocus(e)} onChange={(e) => handleChangeInput(e.target.value)} type="text" ></input>
+              <input className={selectStyles.selectInput} placeholder={inputPlaceholder} onKeyDown={(e) => handleKeyPress(e)} onFocus={(e) => handleFocus(e)} value={inputValue} onChange={(e) => handleChangeInput(e.target.value)} type="text" ></input>
             }
             {
               type === multiCollaborator && !isEmpty(selectedValue) && selectedValue.map((x, i) => {
@@ -258,8 +289,10 @@ export const Select = ({ inputReference, value, option, onChange: setSelectedPop
                 inputValue && valueIsExist &&
                 <div className={selectStyles.addBtn} onClick={() => handleChangeAdd()}>Create  "{inputValue}"</div>
               }
-              {!isEmpty(options) && options.map(x => (
-                <span key={x.id} value={x.value} className={selectStyles.itemComponent} onKeyPress={(e) => console.log('optionp', e)} onClick={() => handleChangeSelectOption(x)} >
+              {!isEmpty(options) && options.map((x, i) => (
+                <span key={x.id} value={x.value} className={selectStyles.itemComponent}
+                  ref={(el) => (inputEl.current[i] = el)}
+                  onKeyPress={(e) => console.log('optionp', e)} onClick={() => handleChangeSelectOption(x)} >
                   <label className={selectStyles.labelView} style={{
                     color: (colorIsLight(colorDisable ? (disableColorCode ? disableColorCode : "#9e9e9e") : x.color) ? "#ffffff" : "#000000"),
                     background: colorDisable ? (disableColorCode ? disableColorCode : "#9e9e9e") : x.color
