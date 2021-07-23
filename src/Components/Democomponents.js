@@ -171,11 +171,12 @@ export const Select = ({ inputReference, value, option, onChange: setSelectedPop
   const manageHower = (e) => {
     inputEl.current.forEach((element, x) => {
       if (e === x) {
-        element.style.background = "blue";
+        element.style.background = "#cbeff5";
       } else {
         element.style.background = "white";
       }
-    });
+    })
+
   }
   const handleInputValue = (e) => {
     if (e !== 0) {
@@ -198,25 +199,43 @@ export const Select = ({ inputReference, value, option, onChange: setSelectedPop
       setCount(countCheck)
       handleInputValue(countCheck - 1)
       manageHower(countCheck - 1)
+      if (countCheck >= options.length) {
+        setCount(0)
+        // handleInputValue(count - 1)
+      }
     }
+
+
+    // if (e.keyCode === 13) {
+    //   if (inputValue) {
+    //       handleChangeAdd();
+    //     setOpen(false);
+    //   }
+    //   setInputValue("");
+    // }
 
 
     if (e.keyCode === 13) {
       if (inputValue) {
-        console.log(countCheck);
-        if (countCheck <= 1) {
-          removedAllItem()
-        } else {
-          handleChangeAdd();
-        }
-        setOpen(false);
+        handleChangeAdd();
+
+      } else if (countCheck <= 1) {
+        removedAllItem()
       }
-      setInputValue("");
+      setOpen(false);
     }
 
     if (e.keyCode === 8) {
-      selectedValue.pop();
-      handleChangeInput();
+      if (inputValue) {
+
+        setInputValue("")
+        handleChangeInput();
+
+      } else {
+
+        selectedValue.pop();
+        handleChangeInput();
+      }
     }
   }
 
