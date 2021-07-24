@@ -28,6 +28,15 @@ export const Select = ({ inputReference, value, option, onChange: setSelectedPop
   }, [open])
 
   const handleChangeAdd = () => {
+    const isExist = selectedValue.filter(item => {
+      if (inputValue === item.value) {
+        return item.value
+      }
+    })
+    if (isExist.length > 0) {
+      alert("Option Already Exist !!!")
+      return
+    }
 
     const modifyData = { id: propsOptionsState.length + 1, label: inputValue, value: inputValue, color: ColorSelection[propsOptionsState.length].color, newCreate: true }
     setPropsOptionsState([...propsOptionsState, modifyData])
@@ -41,9 +50,7 @@ export const Select = ({ inputReference, value, option, onChange: setSelectedPop
       setSelectedValue([...selectedValue, modifyData])
       setSelectedPops([...selectedValue, modifyData])
       const removeSameOption = selectedValue.map((io) => io.id);
-      console.log("removeSameOption", removeSameOption);
       var result = propsOptionsState.filter(e => removeSameOption.indexOf(e.id) === -1)
-      console.log("result", result);
       setOptions(result)
     }
   }
@@ -65,7 +72,6 @@ export const Select = ({ inputReference, value, option, onChange: setSelectedPop
       return setOptions(result.filter((x) => x.value.toUpperCase().includes(payload.toUpperCase())))
     }
     const isValue = options.filter((x) => x.value === payload)
-    console.log("options", options);
     if (payload) {
       setOptions(options.filter((x) => x.value.includes(payload)))
     } else {
@@ -82,7 +88,6 @@ export const Select = ({ inputReference, value, option, onChange: setSelectedPop
   }
 
   const handleChangeSelectOption = (payload) => {
-    console.log("handleChangeSelectOption");
     if (payload && payload.id === EMPTYVALUE) {
       setOptions(propsOptionsState)
       setSelectedValue([])
@@ -108,7 +113,6 @@ export const Select = ({ inputReference, value, option, onChange: setSelectedPop
   }
 
   const headerClickCheck = e => {
-    console.log("headerClickCheck called", e);
     if (inputRef.current !== null && !inputRef.current.contains(e.target)) {
       setOpen(!open)
       setInputValue('')
@@ -165,7 +169,6 @@ export const Select = ({ inputReference, value, option, onChange: setSelectedPop
   }
 
   const handleFocus = (e) => {
-    console.log("focus tab button called", e);
     setOpen(true)
   }
   const manageHower = (e) => {
@@ -179,52 +182,40 @@ export const Select = ({ inputReference, value, option, onChange: setSelectedPop
 
   }
   const handleInputValue = (e) => {
-    if (e !== 0) {
-      setInputValue(options[e].value)
-    } else {
-      return
-    }
+    setInputValue(options[e].value)
   }
 
   const handleKeyPress = (e) => {
     let countCheck = count;
 
-    if (e.keyCode === 38 && countCheck > 1) {
+    if (e.keyCode === 38) {
       countCheck = countCheck - 1;
       setCount(countCheck);
       handleInputValue(countCheck - 1)
       manageHower(countCheck - 1)
+      if (countCheck === 0) {
+        setCount(options.length)
+      }
     } else if (e.keyCode === 40 && countCheck < options.length) {
       countCheck = countCheck + 1
-      setCount(countCheck)
-      handleInputValue(countCheck - 1)
-      manageHower(countCheck - 1)
+      setCount(countCheck);
+      handleInputValue(countCheck - 1);
+      manageHower(countCheck - 1);
       if (countCheck >= options.length) {
         setCount(0)
-        // handleInputValue(count - 1)
       }
     }
 
-
-    // if (e.keyCode === 13) {
-    //   if (inputValue) {
-    //       handleChangeAdd();
-    //     setOpen(false);
-    //   }
-    //   setInputValue("");
-    // }
-
-
     if (e.keyCode === 13) {
-      if (inputValue) {
-        handleChangeAdd();
-
-      } else if (countCheck <= 1) {
+      if (countCheck <= 1 && inputValue === "...Empty") {
         removedAllItem()
+        setInputValue('');
+      }
+      else if (inputValue) {
+        handleChangeAdd();
       }
       setOpen(false);
     }
-
     if (e.keyCode === 8) {
       if (inputValue) {
 
@@ -238,8 +229,6 @@ export const Select = ({ inputReference, value, option, onChange: setSelectedPop
       }
     }
   }
-
-  console.log("inputValueinputValue", inputValue);
 
   return (
     <div ref={inputReference}>
@@ -311,7 +300,7 @@ export const Select = ({ inputReference, value, option, onChange: setSelectedPop
               {!isEmpty(options) && options.map((x, i) => (
                 <span key={x.id} value={x.value} className={selectStyles.itemComponent}
                   ref={(el) => (inputEl.current[i] = el)}
-                  onKeyPress={(e) => console.log('optionp', e)} onClick={() => handleChangeSelectOption(x)} >
+                  onClick={() => handleChangeSelectOption(x)} >
                   <label className={selectStyles.labelView} style={{
                     color: (colorIsLight(colorDisable ? (disableColorCode ? disableColorCode : "#9e9e9e") : x.color) ? "#ffffff" : "#000000"),
                     background: colorDisable ? (disableColorCode ? disableColorCode : "#9e9e9e") : x.color
