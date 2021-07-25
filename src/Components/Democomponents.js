@@ -19,7 +19,9 @@ export const Select = ({ inputReference, value, option, onChange: setSelectedPop
   const [open, setOpen] = useState(isOpenOption ? isOpenOption : false)
   const [isOpenModel, setIsOpenModel] = useState(false)
   const inputRef = useRef()
-  const inputEl = useRef([]);
+ 
+
+  // const inputEl = useRef([]);
 
   useEffect(() => {
     if (!open) {
@@ -171,16 +173,17 @@ export const Select = ({ inputReference, value, option, onChange: setSelectedPop
   const handleFocus = (e) => {
     setOpen(true)
   }
-  const manageHower = (e) => {
-    debugger
-    inputEl.current.forEach((element, x) => {
-      if (e === x) {
-        element.style.background = "#cbeff5";
-      } else {
-        element.style.background = "white";
-      }
-    })
-  }
+  // const handleHover = (e) => {
+  //   console.log("hover",e);
+    
+  //   inputEl.current.forEach((element, x) => {
+  //     if (e === x) {
+  //       element.style.background = "#cbeff5";
+  //     } else {
+  //       element.style.background = "white";
+  //     }
+  //   })
+  // }
   
   const handleInputValue = (e) => {
     
@@ -195,7 +198,7 @@ export const Select = ({ inputReference, value, option, onChange: setSelectedPop
       countCheck =countCheck === 0 ? options.length - 1 : countCheck - 1;
       setCount(countCheck);
       handleInputValue(countCheck)
-      manageHower(countCheck)
+      // handleHover(countCheck)
       // if (countCheck === -1) {
       //   setCount(options.length - 1)
       // }
@@ -203,7 +206,7 @@ export const Select = ({ inputReference, value, option, onChange: setSelectedPop
       countCheck = countCheck === options.length - 1 ? 0 : countCheck + 1;
       setCount(countCheck);
       handleInputValue(countCheck);
-      manageHower(countCheck);
+      // handleHover(countCheck);
       // if (countCheck >= options.length) {
       //   setCount(0)
       // }
@@ -301,7 +304,8 @@ export const Select = ({ inputReference, value, option, onChange: setSelectedPop
               }
               {!isEmpty(options) && options.map((x, i) => (
                 <span key={x.id} value={x.value} className={selectStyles.itemComponent}
-                  ref={(el) => (inputEl.current[i] = el)}
+                  // ref={(el) => (inputEl.current[i] = el)}
+                  style={{ backgroundColor:(count === i ? "#cbeff5":"white")  }}
                   onClick={() => handleChangeSelectOption(x)} >
                   <label className={selectStyles.labelView} style={{
                     color: (colorIsLight(colorDisable ? (disableColorCode ? disableColorCode : "#9e9e9e") : x.color) ? "#ffffff" : "#000000"),
