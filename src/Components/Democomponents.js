@@ -172,6 +172,7 @@ export const Select = ({ inputReference, value, option, onChange: setSelectedPop
     setOpen(true)
   }
   const manageHower = (e) => {
+    debugger
     inputEl.current.forEach((element, x) => {
       if (e === x) {
         element.style.background = "#cbeff5";
@@ -179,9 +180,10 @@ export const Select = ({ inputReference, value, option, onChange: setSelectedPop
         element.style.background = "white";
       }
     })
-
   }
+  
   const handleInputValue = (e) => {
+    
     setInputValue(options[e].value)
   }
 
@@ -189,21 +191,22 @@ export const Select = ({ inputReference, value, option, onChange: setSelectedPop
     let countCheck = count;
 
     if (e.keyCode === 38) {
-      countCheck = countCheck - 1;
+    
+      countCheck =countCheck === 0 ? options.length - 1 : countCheck - 1;
       setCount(countCheck);
-      handleInputValue(countCheck - 1)
-      manageHower(countCheck - 1)
-      if (countCheck === 0) {
-        setCount(options.length)
-      }
+      handleInputValue(countCheck)
+      manageHower(countCheck)
+      // if (countCheck === -1) {
+      //   setCount(options.length - 1)
+      // }
     } else if (e.keyCode === 40 && countCheck < options.length) {
-      countCheck = countCheck + 1
+      countCheck = countCheck === options.length - 1 ? 0 : countCheck + 1;
       setCount(countCheck);
-      handleInputValue(countCheck - 1);
-      manageHower(countCheck - 1);
-      if (countCheck >= options.length) {
-        setCount(0)
-      }
+      handleInputValue(countCheck);
+      manageHower(countCheck);
+      // if (countCheck >= options.length) {
+      //   setCount(0)
+      // }
     }
 
     if (e.keyCode === 13) {
@@ -216,14 +219,13 @@ export const Select = ({ inputReference, value, option, onChange: setSelectedPop
       }
       setOpen(false);
     }
+ 
+
     if (e.keyCode === 8) {
       if (inputValue) {
-
         setInputValue("")
         handleChangeInput();
-
       } else {
-
         selectedValue.pop();
         handleChangeInput();
       }
